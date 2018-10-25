@@ -1,0 +1,6 @@
+{% if login %}
+<img src="{{ avatar }}" alt="signed in as {{ login }}" title="{{ login }}" /><br>
+    <a href="{{ url_for('auth.logout') }}" class="navbar-link">logout</a>
+{% else %}
+    <a href="{{ url_for('auth.login') }}?state={{ state }}">Login</a>
+{% endif %}

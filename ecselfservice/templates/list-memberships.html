@@ -1,0 +1,20 @@
+{% if current_user.is_authenticated %}
+    <div class="panel panel-info hidden-xs hidden-sm">
+        <div class="panel-heading">
+            <h3 class="panel-title">memberships</h3>
+        </div>
+        <div class="panel-body">
+            <ul class="list-group">
+                {% for team in current_user.teams %}
+                <li class="list-group-item">
+                    {% if team['is_member'] == True %}
+                    <span class="badge badge-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>
+                    {% else %}
+                    <span class="badge badge-danger"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span></span>
+                    {% endif %} <label>{{ team['name'] }}</label>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endif %}

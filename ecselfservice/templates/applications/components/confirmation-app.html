@@ -1,0 +1,40 @@
+<div class="modal fade" id="mdlConfirmation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="gridSystemModalLabel">API Credentials</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-condensed table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td>Application</td>
+                                    <td class="active"><samp>{{ app.name }}</samp></td>
+                                </tr>
+                                <tr>
+                                    <td>Shared Secret</td>
+                                    <td class="active"><samp>{{ secure_token }}</samp></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p>
+                        This shared secret cannot be retrieved in the future. Store it in a secure location.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="checkbox">
+                    <div data-toggle="enable" data-target="#continue">
+                        <label>
+                            <input id="chkContinue" type="checkbox"> I have saved my shared secret and am ready to continue.
+                        </label>
+                    </div>
+                    <a id="btnContinue" class="btn btn-primary disabled" href="{{ url_for('applications.application_events', app_name=app.name) }}" role="button">Continue</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

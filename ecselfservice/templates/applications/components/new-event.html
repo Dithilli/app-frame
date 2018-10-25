@@ -1,0 +1,47 @@
+<ol class="breadcrumb">
+    <li><a href="{{ url_for('applications.applications') }}">Applications</a></li>
+    <li class="active">{{ form.app_name.data }}</li>
+    <li><a href="{{ url_for('applications.application_events', app_name=form.app_name.data) }}">Events</a></li>
+    <li class="active">new</li>
+</ol>
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h3 class="panel-title">new event</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-5">
+                <form action="{{ url_for('applications.application_event_new', app_name=form.app_name.data) }}" method="post">
+                    {% if form %}{{ form.csrf_token }}{% endif %}
+                    <div class="form-group">
+                        <label for="appName">Application Name</label>
+                        <input type="text" class="form-control" id="appName" placeholder="{{ form.app_name.data }}" disabled>
+                    </div>
+                    <div class="form-group has-feedback {% if form and form.event_name.errors %}has-error{% endif %}">
+                        <label for="event_name">Event Name</label>
+                        <input type="text" class="form-control" id="event_name" name="event_name" aria-describedby="event_name_status" placeholder="Event Name">
+                        {% if form and form.event_name.errors %}
+                        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                        <span class="help-block">{{ form.event_name.errors | join(', ') }}</span>
+                        {% endif %}
+                    </div>
+                    <p class="text-right">
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </p>
+                </form>
+            </div>
+            <div class="col-md-7">
+                <div class="panel panel-warning">
+                    <div class="panel-heading">Creating your new event</div>
+                    <div class="panel-body">
+                        <p>
+                        Creating a new event will give you the following endpoint
+                        </p>
+                        <p>
+                            /v1/applications/{{ form.app_name.data }}/event/yourEvent
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

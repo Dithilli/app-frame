@@ -1,0 +1,51 @@
+        <nav class="navbar navbar-static-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="{{ url_for('index') }}">EventCollector Self Service</a>
+                </div>
+                {% if current_user.is_authenticated and (current_user.has_read_access or current_user.has_write_access) %}
+                    <ul class="nav navbar-nav hidden-xs">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Applications <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                {% if current_user.has_read_access %}
+                                    <li><a href="{{ url_for('applications.applications') }}">List Applications</a></li>
+                                    <li><a href="{{ url_for('applications.events') }}">List Events</a></li>
+                                {% endif %}
+                                {% if current_user.has_write_access %}
+                                    <li><a href="{{ url_for('applications.application_new') }}">Create Application</a></li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav visible-xs">
+                        {% if current_user.has_read_access %}
+                        <li><a href="{{ url_for('applications.applications') }}">List Applications</a></li>
+                        <li><a href="{{ url_for('applications.events') }}">List Events</a></li>
+                        {% endif %}
+                        {% if current_user.has_write_access %}
+                        <li><a href="{{ url_for('applications.application_new') }}">Create Application</a></li>
+                        {% endif %}
+                    </ul>
+                {% endif %}
+                <ul class="nav navbar-nav navbar-right hidden-xs">
+                    {% if current_user.is_authenticated %}
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <img src="{{ current_user.avatar }}" alt="authenticated as {{ current_user.user_id }}" title="authenticated as {{ current_user.user_id }}" /> <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu"><li><a href="{{ url_for('auth.logout') }}">Logout</a></li></ul>
+                    </li>
+                    {% else %}
+                    <li><a href="{{ url_for('auth.login') }}?state={{ current_user.state }}">Login</a></li>
+                    {% endif %}
+                </ul>
+                <ul class="nav navbar-nav navbar-right visible-xs">
+                    {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('auth.logout') }}">Logout ({{ current_user.user_id }})</a></li>
+                    {% else %}
+                    <li><a href="{{ url_for('auth.login') }}?state={{ current_user.state }}">Login</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>

@@ -1,0 +1,77 @@
+{% include "applications/components/confirmation-app.html" %}
+<ol class="breadcrumb">
+    <li><a href="{{ url_for('applications.applications') }}">Applications</a></li>
+    {% if app == None %}
+    <li class="active">new</li>
+    {% else %}
+    <li class="active">{{ app.name }}</li>
+    <li class="active">info</li>
+    {% endif %}
+</ol>
+<div class="panel panel-info">
+    <div class="panel-heading">
+        {% if app == None %}
+        <h3 class="panel-title">new application</h3>
+        {% else %}
+        <h3 class="panel-title">application info</h3>
+        {% endif %}
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-5">
+                <form action="{{ url_for('applications.application_new') }}" method="post">
+                    {% if secure_token %}
+                    <input type="hidden" id="secure_token" name="secure_token" value="{{ secure_token }}">
+                    {% endif %}
+                    {% if form %}
+                    {{ form.csrf_token }}
+                    {% endif %}
+                    <div class="form-group has-feedback {% if form and form.app_name.errors %}has-error{% endif %}">
+                        <label for="AppName" class="control-label">App Name</label>
+                        <input type="text" class="form-control" id="app_name" name="app_name" aria-describedby="app_name_status" {% if app == None %}placeholder="App Name"{% else %}placeholder="{{ app.name }}" disabled{% endif %}>
+                        {% if form and form.app_name.errors %}
+                        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                        <span class="help-block">{{ form.app_name.errors | join(', ') }}</span>
+                        {% endif %}
+                    </div>
+                    {% if app == None %}
+                    <p class="text-right">
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </p>
+                    {% endif %}
+                </form>
+            </div>
+            <div class="col-md-7">
+                {% if app == None %}
+                <div class="panel panel-warning">
+                    <div class="panel-heading">Creating your new application</div>
+                    <div class="panel-body">
+                        <p>
+                            Where will your events be coming from? A Service/API? A web application?
+                        </p>
+                        <p>
+                            remember to pick a good namespace for your events!
+                        </p>
+                        <p>
+                            you will also be given a one time shared security key. It is highly advised to store
+                            this password within your teams 1password vault
+                        </p>
+                    </div>
+                </div>
+                {% else %}
+                <div class="panel panel-warning">
+                    <div class="panel-heading">Existing application</div>
+                    <div class="panel-body">
+                        <p>
+                            info regarding an existing application
+                        </p>
+                        <p>
+                            info regarding the secret key
+                        </p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

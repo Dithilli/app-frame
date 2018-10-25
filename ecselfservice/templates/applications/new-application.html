@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block scripts %}
+<script type="text/javascript">
+    $(function(){
+        let canContinue = function() {
+            if ($('#chkContinue')[0].checked) $("#btnContinue").removeClass("disabled");
+            else $("#btnContinue").addClass("disabled");
+        }
+        canContinue();
+        $('#chkContinue').change(canContinue);
+        if($("#secure_token").length > 0)
+            $('#mdlConfirmation').modal({backdrop: 'static', keyboard: false, show: true});
+    });
+</script>
+{% endblock %}
+{% block content %}
+    {% include "applications/components/new-application.html" %}
+{% endblock %}

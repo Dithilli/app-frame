@@ -1,0 +1,30 @@
+.badge-danger {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}
+
+.badge-success {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}
+
+.nav,
+nav.navbar {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+
+.popover dl {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.popover .dl-horizontal dt {
+    width: 60px;
+}
+.popover .dl-horizontal dd {
+    margin-left: 70px;
+    width: 100px;
+}

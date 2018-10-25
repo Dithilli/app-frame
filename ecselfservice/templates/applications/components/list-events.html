@@ -1,0 +1,61 @@
+<ol class="breadcrumb">
+    <li><a href="{{ url_for('applications.applications') }}">Applications</a></li>
+    {% if current_app %}
+    <li><a href="{{ url_for('applications.application_events', app_name=current_app) }}">{{ current_app }}</a></li>
+    <li class="active">events</li>
+    {% else %}
+    <li><a href="{{ url_for('applications.events') }}">Events</a></li>
+    <li class="active">all</li>
+    {% endif %}
+</ol>
+{% for app in apps %}
+    <div class="panel panel-info">
+
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <div class="popover">
+                    {# <div class="panel-body"> #}
+                        <dl class="dl-horizontal">
+                            <dt>Created:</dt>
+                            <dd>{{ app.created_on.humanize() }}</dd>
+                            <dt>Owner:</dt>
+                            <dd>{{ app.created_by }}</dd>
+                            <dt>Events:</dt>
+                            <dd>{{ app.events | count }}</dd>
+                        </dl>
+                    {# </div> #}
+                </div>
+                <span class="glyphicon glyphicon-question-sign visible-md-inline visible-lg-inline"
+                      data-trigger="click hover focus"
+                      data-placement="left" data-toggle="popover"
+                                            title="Application: {{ app.name }}"></span>
+                {{ app.name }} events
+            </h3>
+        </div>
+        <div class="panel-body">
+            <table class="table table-condensed table-striped table-bordered">
+                <tr>
+                    <th>Name</th>
+                    <th>Created</th>
+                    <th>Creator</th>
+                </tr>
+                {% for event in app.events %}
+                <tr>
+                    <td><a href="#">{{ event.name }}</a></td>
+                    <td>{{ event.created_on.humanize() }}</td>
+                    <td><a href="#">{{ event.created_by }}</a></td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3"> No Events </td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% if current_user.has_write_access %}
+            <p class="text-right">
+                <a href="{{ url_for('applications.application_event_new', app_name=app.name) }}" class="btn btn-primary active" role="button">New Event</a>
+            </p>
+            {% endif %}
+        </div>
+    </div>
+{% endfor %}
